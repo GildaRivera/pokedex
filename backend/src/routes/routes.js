@@ -1,6 +1,8 @@
 module.exports = routes => {
     const user= require("../controllers/user.controller");
     const pokemon = require("../controllers/pokemon.controller")
+    const move = require("../controllers/move.controller")
+    const movehaspokemon = require("../controllers/moveHaspokemon.controller")
     var router = require("express").Router();
     // USER
     // Create a new user
@@ -25,6 +27,31 @@ module.exports = routes => {
     router.put("/pokemon/:id", pokemon.updatePokemon);
     // Delete a user with id
     router.delete("/pokemon/:id", pokemon.deletePokemon);
+
+  // MOVE
+    // Create a new move
+    router.post("/move", move.createMove);
+    // Retrieve all moves
+    router.get("/move", move.getAllMoves);
+    // Retrieve a single move with id
+    router.get("/move/:id", move.getMove);
+    // Update a move with id
+    router.put("/move/:id", move.updateMove);
+    // Delete a move with id
+    router.delete("/move/:id", move.deleteMove);
+
+
+  // MOVE HAS POKEMON
+    // Assign new move fo
+    router.post("/move-pokemon", movehaspokemon.createMove);
+    // Retrieve all assign moves
+    router.get("/move-pokemon", movehaspokemon.getAllMoves);
+    // Retrieve a single assign move with id
+    router.get("/move-pokemon/:id", movehaspokemon.getMove);
+    // Update assign move with id
+    router.put("/move-pokemon/:id", movehaspokemon.updateMove);
+    // Delete a assign move with id
+    router.delete("/move-pokemon/:id", movehaspokemon.deleteMove);
 
 
 
