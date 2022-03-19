@@ -1,22 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/utils/Navbar/navbar';
-import PokeCard from './components/utils/PokemnCard/pokemonCard';
+import AllPokemons from './components/Pokemons/Home/AllPokemons';
 function App() {
   return (
     <>
      <Navbar />
-     <div class="pokeCard-container">
-     <PokeCard />
-     <PokeCard />
-     <PokeCard />
-     <PokeCard />
-
-     <PokeCard />
-     <PokeCard />
-     <PokeCard />
-     <PokeCard />
-    </div>
+  <AllPokemons />
     
     
     </>
