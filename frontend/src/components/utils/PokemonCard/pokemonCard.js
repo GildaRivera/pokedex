@@ -2,16 +2,21 @@ import {
   Card,
   CardActions,
   CardContent,
+  CircularProgress,
+  Icon,
   List,
   ListItem,
   ListItemText,
   ListSubheader,
   Typography,
 } from "@mui/material";
+import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
+import { Loading } from "notiflix";
 import { useEffect, useState } from "react";
 
 export default function PokeCard(props) {
   const [pokemon, setPokemon] = useState({ name: "", moves: [], image: "" });
+  const [loader, setLoader] = useState(false);
   const style = {
     backgroundImage: `url(${pokemon.image})`,
     height: "40vh",
@@ -20,6 +25,7 @@ export default function PokeCard(props) {
   };
   //Gest data of pokemon
   async function getPokeData() {
+    setLoader(true);
     await fetch(url)
       .then((response) => response.json())
       .then((actualData) => {
@@ -31,6 +37,8 @@ export default function PokeCard(props) {
           };
         });
       });
+    Loading.remove();
+    setLoader(false);
   }
   useEffect(() => {
     getPokeData();
@@ -39,7 +47,9 @@ export default function PokeCard(props) {
   const { name, url } = props.pokemon;
   return (
     <Card sx={{ minWidth: 275, margin: "3% 0%" }}>
-      <CardContent>
+      <CatchingPokemonIcon color="primary" />
+      {loader ? <CircularProgress /> 
+:      <CardContent>
         <Typography variant="h5" component="div">
           {name}
         </Typography>
@@ -53,9 +63,9 @@ export default function PokeCard(props) {
         {/* <div variant="body2">
        moves{pokemon.moves.map(({move},i)=><li key={i}>{move.name}</li>)}
       </div> */}
-   <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-       Moves
-      </Typography> 
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          Moves
+        </Typography>
         <List
           sx={{
             width: "100%",
@@ -67,18 +77,14 @@ export default function PokeCard(props) {
             "& ul": { padding: 0 },
           }}
         >
-       <ListSubheader>
-         
-       </ListSubheader>
+          <ListSubheader></ListSubheader>
           {pokemon.moves.map(({ move }, i) => (
-         
-              <ListItem key={i}>
-                <ListItemText primary={move.name} />
-              </ListItem>
-       
+            <ListItem key={i}>
+              <ListItemText primary={move.name} />
+            </ListItem>
           ))}
         </List>
-      </CardContent>
+      </CardContent>}
 
       <CardActions></CardActions>
     </Card>
