@@ -14,7 +14,7 @@ export default function MyPokemons(props) {
     )
       .then((response) => response.json())
       .then(async function (actualData) {
-        setPokeData(actualData);
+       await setPokeData(actualData);
       });
       Loading.remove()
   }
@@ -22,6 +22,9 @@ export default function MyPokemons(props) {
   useEffect(() => {
     getPokeData();
   }, [page.pagination]);
+  const handleDelete=()=>{
+   getPokeData()
+  }
   //Changes state for the pagination
   const handleChange = (e, next) => {
     setPage((prev) => ({
@@ -33,7 +36,7 @@ export default function MyPokemons(props) {
   return (
     <div className="pokeCard-container">
       {pokeData.map((pokemon, i) => (
-        <PokeCard key={i} pokemon={pokemon} mine={true}/>
+        <PokeCard key={i} pokemon={pokemon} mine={true} handleDelete={handleDelete}/>
       ))}
       <Pagination
         count={11}

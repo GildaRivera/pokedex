@@ -4,12 +4,6 @@ import {
   CardActions,
   CardContent,
   CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Icon,
   List,
   ListItem,
   ListItemText,
@@ -17,10 +11,12 @@ import {
   Typography,
 } from "@mui/material";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
-import { Loading } from "notiflix";
+import { Loading, Notify } from "notiflix";
 import { useEffect, useState } from "react";
 import SavePokemon from "../../Pokemons/SavePokemons/savePokemon";
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import './pokemonCard.css'
+import UpdatePokemon from "../../Pokemons/UpdatePokemon/updatePokemon";
 export default function PokeCard(props) {
   const [pokemon, setPokemon] = useState({
     name: "",
@@ -32,7 +28,7 @@ export default function PokeCard(props) {
   const [loader, setLoader] = useState(false);
   const style = {
     backgroundImage: `url(${pokemon.image})`,
-    height: "40vh",
+    height: "30vh",
     backgroundSize: "100%",
     backgroundRepeat: "no-repeat",
   };
@@ -67,17 +63,43 @@ export default function PokeCard(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const { name, url } = props.pokemon;
+  async function handleDelete(){
+    Loading.circle();
+    await fetch(`http://localhost:8082/api/pokemon/${props.pokemon.id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    })
+      .then((response) => {
+        if (response.ok) {
+          Notify.success("Pokemon deleted");
+          return response.json();
+        }
+        throw new Error("Something went wrong");
+      })
+      .catch((err) => {
+        Notify.failure("Error");
+      });
+    Loading.remove();
+  props.handleDelete()
+  }
+  const { name, url, id, gender, nickname } = props.pokemon;
   const handleColor = () => {
-    return props.mine ? "red" : "#1976d2";
+    return props.mine ? "green" : "#1976d2";
   };
   return (
     <>
       <Card sx={{ minWidth: 275, margin: "3% 0%" }}>
+        <div className="icon__container">
         <CatchingPokemonIcon
           sx={{ color: handleColor }}
           onClick={handleClickOpen}
         />
+        {
+          props.mine ? <DeleteIcon sx={{color:'red'}} onClick={handleDelete}/>  : <></>
+        }</div>
         {loader ? (
           <CircularProgress />
         ) : (
@@ -147,7 +169,7 @@ export default function PokeCard(props) {
           <></>
         )
       ) : (
-        <></>
+        <UpdatePokemon open={open} pokemon={pokemon} close={handleClose} id={id} gender={gender} nickname={nickname} onUpdate={props.handleDelete}/>
       )}
     </>
   );
