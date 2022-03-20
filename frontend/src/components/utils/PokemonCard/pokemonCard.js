@@ -22,7 +22,7 @@ import { useEffect, useState } from "react";
 import SavePokemon from "../../Pokemons/SavePokemons/savePokemon";
 
 export default function PokeCard(props) {
-  const [pokemon, setPokemon] = useState({ name: "", moves: [], image: "" });
+  const [pokemon, setPokemon] = useState({ name: "", moves: [], image: "", id:"" });
   const [loader, setLoader] = useState(false);
   const style = {
     backgroundImage: `url(${pokemon.image})`,
@@ -41,6 +41,7 @@ export default function PokeCard(props) {
             name: name,
             moves: actualData.moves,
             image: actualData.sprites.other["official-artwork"].front_default,
+            id: actualData.id
           };
         });
       });

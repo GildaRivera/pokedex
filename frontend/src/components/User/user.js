@@ -28,42 +28,40 @@ export default function User(props) {
       prev[e.target.name] = newValue;
       return prev;
     });
-    console.log(form)
+    console.log(form);
   };
   async function handleSave() {
     Loading.circle();
-    await fetch(
-      `http://localhost:8082/api/user/${2}`, {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-      }
-    )
-      .then((response) => {response.json(); Notify.success('User info updated')})
-      .catch((err)=>{
-        Notify.failure('Error');
-
+    await fetch(`http://localhost:8082/api/user/${2}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    })
+      .then((response) => {
+        if (response.ok) {
+          Notify.success("User info updated");
+          return response.json();
+        }
       })
-      Loading.remove()
+      .catch((err) => {
+        Notify.failure("Error");
+      });
+    Loading.remove();
   }
-  useEffect(()=>{
-    
-  },[])
+  useEffect(() => {}, []);
   return (
     <div>
-
-       <Avatar
-        sx={{ bgcolor:'red' }}
+      <Avatar
+        sx={{ bgcolor: "red" }}
         alt="Remy Sharp"
         src="/broken-image.jpg"
       ></Avatar>
       <Container maxWidth="sm">
         <Box
           sx={{
-            
             display: "flex",
             flexDirection: "column",
           }}
@@ -148,7 +146,9 @@ export default function User(props) {
               sx={{ margin: "2vh 0" }}
             />
           </FormControl>
-          <Button onClick={handleSave} variant="outlined">Save</Button>
+          <Button onClick={handleSave} variant="outlined">
+            Save
+          </Button>
         </Box>
       </Container>
     </div>
