@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Container,
   FormControl,
@@ -8,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { Loading } from "notiflix";
+import { Loading, Notify } from "notiflix";
 import { useEffect, useState } from "react";
 
 export default function User(props) {
@@ -27,27 +28,42 @@ export default function User(props) {
       prev[e.target.name] = newValue;
       return prev;
     });
+    console.log(form)
   };
   async function handleSave() {
-
+    Loading.circle();
     await fetch(
-      `http://localhost:8082/api/user/${1}`
+      `http://localhost:8082/api/user/${2}`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+      }
     )
-      .then((response) => response.json())
-      .then(async function (actualData) {
-    console.log(actualData)
-      });
+      .then((response) => {response.json(); Notify.success('User info updated')})
+      .catch((err)=>{
+        Notify.failure('Error');
+
+      })
+      Loading.remove()
   }
   useEffect(()=>{
     
   },[])
   return (
-    <>
+    <div>
+
+       <Avatar
+        sx={{ bgcolor:'red' }}
+        alt="Remy Sharp"
+        src="/broken-image.jpg"
+      ></Avatar>
       <Container maxWidth="sm">
         <Box
           sx={{
-            bgcolor: "#cfe8fc",
-            height: "100vh",
+            
             display: "flex",
             flexDirection: "column",
           }}
@@ -89,10 +105,11 @@ export default function User(props) {
               label="Gender"
               name="gender"
               onChange={handleUpdate}
-              value=""
+              value={form.gender}
+              defaultValue=""
             >
-              <MenuItem value={"Female"}>Female</MenuItem>
-              <MenuItem value={"Male"}>Male</MenuItem>
+              <MenuItem value="Female">Female</MenuItem>
+              <MenuItem value="Male">Male</MenuItem>
             </Select>
           </FormControl>
 
@@ -115,10 +132,10 @@ export default function User(props) {
               id="trainerclass"
               name="trainerclass"
               onChange={handleUpdate}
-              value=""
+              value={form.trainerclass}
             >
-              <MenuItem value={"Battle"}>Battle</MenuItem>
-              <MenuItem value={"Show"}>Show</MenuItem>
+              <MenuItem value="Battle">Battle</MenuItem>
+              <MenuItem value="Show">Show</MenuItem>
             </Select>
           </FormControl>
           <FormControl>
@@ -131,9 +148,9 @@ export default function User(props) {
               sx={{ margin: "2vh 0" }}
             />
           </FormControl>
-          <Button onClick={handleSave}>Click</Button>
+          <Button onClick={handleSave} variant="outlined">Save</Button>
         </Box>
       </Container>
-    </>
+    </div>
   );
 }

@@ -9,8 +9,8 @@ function App() {
   return (
     <>
      <Navbar />
-  <AllPokemons />
-    {/* <User /> */}
+  {/* <AllPokemons /> */}
+    <User />
     
     </>
   );
