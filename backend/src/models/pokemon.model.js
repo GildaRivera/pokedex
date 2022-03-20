@@ -6,6 +6,7 @@ const Pokemon= function(pokemon) {
     this.gender=pokemon.gender
     this.user_id=pokemon.user_id
     this.pokemonId=pokemon.pokemonId
+    this.url = pokemon.url
 
 };
 Pokemon.create = (newPokemon, result) => {
@@ -42,8 +43,8 @@ Pokemon.getAll = (result) => {
 
 Pokemon.updateById = (id, pokemon, result) => {
   sql.query(
-    "UPDATE pokemon SET name = ?, nickname = ?, gender = ?, user_id = ?, pokemonId = ? WHERE id = ?",
-    [pokemon.name, pokemon.nickname, pokemon.gender, pokemon.user_id, pokemon.pokemonId, id],
+    "UPDATE pokemon SET name = ?, nickname = ?, gender = ?, user_id = ?, url = ?, pokemonId = ? WHERE id = ?",
+    [pokemon.name, pokemon.nickname, pokemon.gender, pokemon.user_id, pokemon.url, pokemon.pokemonId, id],
     (err, res) => {
       if (err) {
         return result(null, err);

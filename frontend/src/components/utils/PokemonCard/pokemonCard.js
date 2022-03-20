@@ -22,7 +22,13 @@ import { useEffect, useState } from "react";
 import SavePokemon from "../../Pokemons/SavePokemons/savePokemon";
 
 export default function PokeCard(props) {
-  const [pokemon, setPokemon] = useState({ name: "", moves: [], image: "", id:"" });
+  const [pokemon, setPokemon] = useState({
+    name: "",
+    moves: [],
+    image: "",
+    id: "",
+    url: "",
+  });
   const [loader, setLoader] = useState(false);
   const style = {
     backgroundImage: `url(${pokemon.image})`,
@@ -41,7 +47,8 @@ export default function PokeCard(props) {
             name: name,
             moves: actualData.moves,
             image: actualData.sprites.other["official-artwork"].front_default,
-            id: actualData.id
+            id: actualData.id,
+            url: url,
           };
         });
       });
@@ -61,10 +68,16 @@ export default function PokeCard(props) {
     setOpen(false);
   };
   const { name, url } = props.pokemon;
+  const handleColor = () => {
+    return props.mine ? "red" : "#1976d2";
+  };
   return (
     <>
       <Card sx={{ minWidth: 275, margin: "3% 0%" }}>
-        <CatchingPokemonIcon color="primary" onClick={handleClickOpen} />
+        <CatchingPokemonIcon
+          sx={{ color: handleColor }}
+          onClick={handleClickOpen}
+        />
         {loader ? (
           <CircularProgress />
         ) : (
@@ -72,16 +85,29 @@ export default function PokeCard(props) {
             <Typography variant="h5" component="div">
               {name}
             </Typography>
-            {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-       Nickname
-      </Typography> */}
-            {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
-       {pokemon.gender}
-      </Typography> */}
+            {props.mine ? (
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                Nickname: {props.pokemon.nickname}
+              </Typography>
+            ) : (
+              <></>
+            )}
+            {props.mine ? (
+               <Typography
+               sx={{ fontSize: 14 }}
+               color="text.secondary"
+               gutterBottom
+             >
+                Gender: {props.pokemon.gender}
+              </Typography>
+            ) : (
+              <></>
+            )}
             <div style={style}></div>
-            {/* <div variant="body2">
-       moves{pokemon.moves.map(({move},i)=><li key={i}>{move.name}</li>)}
-      </div> */}
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
@@ -113,9 +139,13 @@ export default function PokeCard(props) {
         <CardActions></CardActions>
       </Card>
 
-      {/* Opens form to save  pokemon */}
-      {open ? (
-        <SavePokemon open={open} pokemon={pokemon} close={handleClose} />
+      {/* Opens form to save  pokemon if pokemon is not owned*/}
+      {!props.mine ? (
+        open ? (
+          <SavePokemon open={open} pokemon={pokemon} close={handleClose} />
+        ) : (
+          <></>
+        )
       ) : (
         <></>
       )}

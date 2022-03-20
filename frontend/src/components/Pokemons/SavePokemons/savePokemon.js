@@ -20,7 +20,7 @@ export default function SavePokemon(props) {
     nickname: "",
     gender: "",
     user_id:1,
-    url:"",
+    url:props.pokemon.url,
     pokemonId:props.pokemon.id
   });
 

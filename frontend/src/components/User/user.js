@@ -1,3 +1,4 @@
+import CatchingPokemon from "@mui/icons-material/CatchingPokemon";
 import {
   Avatar,
   Button,
@@ -58,7 +59,9 @@ export default function User(props) {
         sx={{ bgcolor: "red" }}
         alt="Remy Sharp"
         src="/broken-image.jpg"
-      ></Avatar>
+      >
+        <CatchingPokemon />
+      </Avatar>
       <Container maxWidth="sm">
         <Box
           sx={{

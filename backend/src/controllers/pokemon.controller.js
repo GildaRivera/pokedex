@@ -12,7 +12,8 @@ exports.createPokemon = (req, res) => {
     nickname: req.body.nickname,
     gender: req.body.gender,
     user_id:req.body.user_id,
-    pokemonId:req.body.pokemonId
+    pokemonId:req.body.pokemonId,
+    url:req.body.url
   });
   // Save pokemon in the database
   Pokemon.create(pokemon, (err, data) => {
