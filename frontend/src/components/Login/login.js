@@ -8,6 +8,8 @@ import {
 import { Box } from "@mui/system";
 import { Loading, Notify } from "notiflix";
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Login(props) {
   const [form, setForm] = useState({
@@ -15,7 +17,7 @@ export default function Login(props) {
     password: "",
   });
   const [logged, setlogged] = useState(false);
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   const handleUpdate = (e) => {
     setForm((prev) => {
       let newValue = e.target.value;
@@ -23,13 +25,13 @@ export default function Login(props) {
       return prev;
     });
   };
+  const navigate = useNavigate();
   useEffect(() => {
     if (logged) {
       props.handleLogin(true, user);
     }
   }, [logged]);
   async function handleLog() {
-    console.log(form);
     Loading.circle();
     await fetch(`http://localhost:8082/api/login`, {
       method: "POST",
@@ -41,15 +43,17 @@ export default function Login(props) {
     })
       .then((response) => {
         if (response.ok) {
-          Notify.success("Logged in", {timeout:1000});
+          Notify.success("Logged in", { timeout: 1000 });
           return response.json();
         }
         throw Error;
-      }).then(async function (actualData) {
-        await setUser(actualData[0]);    
+      })
+      .then(async function (actualData) {
+        await setUser(actualData[0]);
         setlogged(true);
-      }).catch((err) => {
-        Notify.failure("Error in login",{timeout:1000});
+      })
+      .catch((err) => {
+        Notify.failure("Error in login", { timeout: 1000 });
       });
     Loading.remove();
   }
@@ -87,7 +91,7 @@ export default function Login(props) {
         <Button onClick={handleLog} variant="outlined">
           Save
         </Button>
-        <Button onClick={handleLog} variant="outlined">
+        <Button variant="outlined" onClick={() => navigate('/create')} > 
           Create account
         </Button>
       </Box>

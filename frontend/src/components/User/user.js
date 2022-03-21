@@ -45,12 +45,12 @@ export default function User(props) {
     })
       .then((response) => {
         if (response.ok) {
-          Notify.success("User info updated");
+          Notify.success("User info updated", {timeout:1000});
           return response.json();
         }
       })
       .catch((err) => {
-        Notify.failure("Error");
+        Notify.failure("Error in updating",{timeout:1000});
       });
     Loading.remove();
   }
