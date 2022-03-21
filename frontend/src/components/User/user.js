@@ -69,7 +69,7 @@ export default function User(props) {
 
   return (
     <div>
-      <div style={{ position: "relative", left: "10vw" , display:'block'}}>
+      <div style={{ position: "relative", left: "10vw" , display:'block', top:'6vh'}}>
         <Avatar
           sx={{ bgcolor: "red", width: "140px", height: "140px" }}
           alt="Remy Sharp"
@@ -172,7 +172,7 @@ export default function User(props) {
               sx={{ margin: "2vh 0" }}
             />
           </FormControl>
-          <Button onClick={handleSave} variant="outlined">
+          <Button onClick={handleSave} variant="contained">
             Save
           </Button>
         </Box>

@@ -103,8 +103,8 @@ export default function SavePokemon(props) {
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.close}>Cancel</Button>
-        <Button autoFocus onClick={handleSave}>
+        <Button onClick={props.close} >Cancel</Button>
+        <Button autoFocus onClick={handleSave} variant="contained">
           Save
         </Button>
       </DialogActions>

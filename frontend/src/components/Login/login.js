@@ -91,7 +91,7 @@ export default function Login(props) {
         <Button onClick={handleLog} variant="contained" sx={{marginBottom:'2vh'}}>
          Login
         </Button>
-        <Button variant="outlined" onClick={() => navigate('/create')} > 
+        <Button  onClick={() => navigate('/create')} > 
           Create account
         </Button>
       </Box>

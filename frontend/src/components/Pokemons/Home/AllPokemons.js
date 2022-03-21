@@ -26,10 +26,9 @@ export default function AllPokemons(props) {
   const handleChange = (e, next) => {
     setPage((prev) =>{
      let diff= next-prev.pagination
-      console.log(diff)
       return{
       pagination: next,
-      queryPagination: prev.queryPagination + 100,
+      queryPagination: prev.queryPagination + 100*(diff),
     }
   
   

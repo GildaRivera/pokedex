@@ -17,6 +17,7 @@ import SavePokemon from "../../Pokemons/SavePokemons/savePokemon";
 import DeleteIcon from '@mui/icons-material/Delete';
 import './pokemonCard.css'
 import UpdatePokemon from "../../Pokemons/UpdatePokemon/updatePokemon";
+import StarsIcon from '@mui/icons-material/Stars';
 export default function PokeCard(props) {
   const [pokemon, setPokemon] = useState({
     name: "",
@@ -87,7 +88,7 @@ export default function PokeCard(props) {
   }
   const { name, url, id, gender, nickname } = props.pokemon;
   const handleColor = () => {
-    return props.mine ? "green" : "#1976d2";
+    return props.mine ? "#f78839" : "#1976d2";
   };
   return (
     <>
@@ -98,13 +99,13 @@ export default function PokeCard(props) {
           onClick={handleClickOpen}
         />
         {
-          props.mine ? <DeleteIcon sx={{color:'red'}} onClick={handleDelete}/>  : <></>
+          props.mine ? <DeleteIcon sx={{color:'#B02A2A'}} onClick={handleDelete}/>  : <></>
         }</div>
         {loader ? (
           <CircularProgress />
         ) : (
           <CardContent>
-            <Typography variant="h5" component="div">
+            <Typography variant="h5" component="div" >
               {name}
             </Typography>
             {props.mine ? (
@@ -138,6 +139,7 @@ export default function PokeCard(props) {
               Moves
             </Typography>
             <List
+          
               sx={{
                 width: "100%",
                 maxWidth: 360,
@@ -145,12 +147,15 @@ export default function PokeCard(props) {
                 position: "relative",
                 overflow: "auto",
                 maxHeight: "10vh",
+                alignItems:"flex-start",
                 "& ul": { padding: 0 },
               }}
             >
               <ListSubheader></ListSubheader>
               {pokemon.moves.map(({ move }, i) => (
-                <ListItem key={i}>
+                
+                <ListItem key={i} className="list__element">
+                   <StarsIcon sx={{color:'#FFCC00'}}/> 
                   <ListItemText primary={move.name} />
                 </ListItem>
               ))}

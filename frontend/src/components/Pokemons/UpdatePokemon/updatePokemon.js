@@ -113,7 +113,7 @@ export default function UpdatePokemon(props) {
       </DialogContent>
       <DialogActions>
         <Button onClick={props.close}>Cancel</Button>
-        <Button autoFocus onClick={handleUpdate}>
+        <Button autoFocus onClick={handleUpdate} variant="contained">
           Save
         </Button>
       </DialogActions>

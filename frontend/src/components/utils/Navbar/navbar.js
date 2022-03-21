@@ -27,7 +27,8 @@ const handleLogOut = ()=>{
   
     return (
       <Box sx={{ width: "100%" }}>
-        <Box >
+        <Box  sx={{ width: "100%" , position: 'fixed',
+      backgroundColor: 'white',  boxShadow: 3 }}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -54,13 +55,14 @@ const handleLogOut = ()=>{
             <Tab label="HOME"/>
             <Tab label="POKEMONS" />
             <Tab label="YOUR POKEMONS" />
-            <Login
-    
-          sx={{ color: "red"}}
-          onClick={handleLogOut}
-          /> 
+         
         
           </Tabs>
+          <Login
+    
+    sx={{ color: "red", position:'absolute', left:'98vw', top: '1vh'}}
+    onClick={handleLogOut}
+    /> 
         </Box>
         <TabPanel value={value} index={0}>
           <User />
