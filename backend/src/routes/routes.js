@@ -15,6 +15,8 @@ module.exports = routes => {
     router.put("/user/:id", user.updateUser);
     // Delete a user with id
     router.delete("/user/:id", user.deleteUser);
+    // Login user
+    router.post("/login", user.loginUser);
 
     // POKEMON
     // Create a new pokemon
@@ -27,6 +29,8 @@ module.exports = routes => {
     router.put("/pokemon/:id", pokemon.updatePokemon);
     // Delete a user with id
     router.delete("/pokemon/:id", pokemon.deletePokemon);
+    //Get pokemon for user
+    router.get("/pokemon/user/:id", pokemon.userPokemon);
 
   // MOVE
     // Create a new move

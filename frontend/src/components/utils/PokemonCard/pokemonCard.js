@@ -74,13 +74,13 @@ export default function PokeCard(props) {
     })
       .then((response) => {
         if (response.ok) {
-          Notify.success("Pokemon deleted");
+          Notify.success("Pokemon deleted",{timeout:1000});
           return response.json();
         }
         throw new Error("Something went wrong");
       })
       .catch((err) => {
-        Notify.failure("Error");
+        Notify.failure("Error deleting",{timeout:1000});
       });
     Loading.remove();
   props.handleDelete()

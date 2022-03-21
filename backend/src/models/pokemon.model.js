@@ -40,7 +40,15 @@ Pokemon.getAll = (result) => {
    return  result(null, res);
   });
 };
-
+Pokemon.getUser = (id, result) => {
+  sql.query("SELECT * FROM pokemon WHERE user_id = ?",[id] , (err, res) => {
+    if (err) {
+      result(null, err);
+      return;
+    }
+    result(null, res);
+  });
+};
 Pokemon.updateById = (id, pokemon, result) => {
   sql.query(
     "UPDATE pokemon SET name = ?, nickname = ?, gender = ?, user_id = ?, url = ?, pokemonId = ? WHERE id = ?",

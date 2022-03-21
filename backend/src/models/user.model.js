@@ -43,17 +43,15 @@ User.getAll = (result) => {
    return  result(null, res);
   });
 };
-// User.getAllPublished = result => {
-//   sql.query("SELECT * FROM tutorials WHERE published=true", (err, res) => {
-//     if (err) {
-//       console.log("error: ", err);
-//       result(null, err);
-//       return;
-//     }
-//     console.log("tutorials: ", res);
-//     result(null, res);
-//   });
-// };
+User.login = (email, result) => {
+  sql.query("SELECT * FROM user WHERE email = ?",[email] , (err, res) => {
+    if (err) {
+      result(null, err);
+      return;
+    }
+    result(null, res);
+  });
+};
 User.updateById = (id, user, result) => {
   sql.query(
     "UPDATE user SET name = ?, nickname = ?, region = ?, gender = ?, age = ?, trainerclass = ?, email = ? WHERE id = ?",

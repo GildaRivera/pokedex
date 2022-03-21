@@ -11,29 +11,31 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Loading, Notify } from "notiflix";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../App";
 
 export default function User(props) {
+  const user = useContext(UserContext);
   const [form, setForm] = useState({
-    name: "",
-    nickname: "",
-    gender: "",
-    email: "",
-    region: "",
-    age: "",
-    trainerclass: "",
+    name: user.user.name,
+    nickname: user.user.nickname,
+    gender: user.user.gender,
+    email: user.user.email,
+    region: user.user.region,
+    age: user.user.age,
+    trainerclass: user.user.trainerclass,
   });
+
   const handleUpdate = (e) => {
     setForm((prev) => {
       let newValue = e.target.value;
       prev[e.target.name] = newValue;
       return prev;
     });
-    console.log(form);
   };
   async function handleSave() {
     Loading.circle();
-    await fetch(`http://localhost:8082/api/user/${2}`, {
+    await fetch(`http://localhost:8082/api/user/${user.user.id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -71,8 +73,10 @@ export default function User(props) {
         >
           <FormControl>
             <TextField
+            id="name"
               name="name"
               label="Name"
+              defaultValue={user.user.name}
               variant="outlined"
               sx={{ margin: "2vh 0" }}
               onChange={handleUpdate}
@@ -84,6 +88,7 @@ export default function User(props) {
               name="nickname"
               onChange={handleUpdate}
               label="Nickname"
+              defaultValue={user.user.nickname}
               variant="outlined"
               sx={{ margin: "2vh 0" }}
             />
@@ -94,6 +99,7 @@ export default function User(props) {
               onChange={handleUpdate}
               label="Region"
               name="region"
+              defaultValue={user.user.region}
               variant="outlined"
               sx={{ margin: "2vh 0" }}
             />
@@ -105,9 +111,8 @@ export default function User(props) {
               id="gender"
               label="Gender"
               name="gender"
+              defaultValue={user.user.gender}
               onChange={handleUpdate}
-              value={form.gender}
-              defaultValue=""
             >
               <MenuItem value="Female">Female</MenuItem>
               <MenuItem value="Male">Male</MenuItem>
@@ -121,6 +126,7 @@ export default function User(props) {
               name="age"
               onChange={handleUpdate}
               type="number"
+              defaultValue={user.user.age}
               variant="outlined"
               sx={{ margin: "2vh 0" }}
             />
@@ -131,9 +137,10 @@ export default function User(props) {
             <Select
               label="Trainer class"
               id="trainerclass"
+              defaultValue={user.user.trainerclass}
               name="trainerclass"
               onChange={handleUpdate}
-              value={form.trainerclass}
+       
             >
               <MenuItem value="Battle">Battle</MenuItem>
               <MenuItem value="Show">Show</MenuItem>
@@ -144,6 +151,7 @@ export default function User(props) {
               id="email"
               label="Email"
               name="email"
+              defaultValue={user.user.email}
               onChange={handleUpdate}
               variant="outlined"
               sx={{ margin: "2vh 0" }}

@@ -94,3 +94,25 @@ exports.deletePokemon = (req, res) => {
   });
 };
 
+// user pokemon
+exports.userPokemon = (req, res) => {
+  Pokemon.getUser(req.params.id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        return res.status(404).send({
+          error: `Not found pokemon for email${req.params.id}.`,
+        });
+      } else {
+        return res.status(500).send({
+          error: "Error retrieving pokemon for email " + req.params.id,
+        });
+      }
+    } else if(data.length==0){
+      return res.status(404).send({
+        error: `Not found user email${req.params.id}.`,
+      });
+    }
+    
+    return res.send(data);
+  });
+};

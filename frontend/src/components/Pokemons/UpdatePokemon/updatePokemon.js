@@ -12,14 +12,16 @@ import {
   TextField,
 } from "@mui/material";
 import { Loading, Notify } from "notiflix";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../../App";
 
 export default function UpdatePokemon(props) {
+  const user = useContext(UserContext); 
   const [form, setForm] = useState({
     name: props.pokemon.name,
     nickname: props.nickname,
     gender: props.gender,
-    user_id: 1,
+    user_id: user.user.id,
     url: props.pokemon.url,
     pokemonId: props.pokemon.id,
   });
@@ -45,13 +47,13 @@ export default function UpdatePokemon(props) {
     })
       .then((response) => {
         if (response.ok) {
-          Notify.success("Pokemon updated");
+          Notify.success("Pokemon updated",{timeout:1000});
           return response.json();
         }
         throw new Error("Somethi ng went wrong");
       })
       .catch((err) => {
-        Notify.failure("Error");
+        Notify.failure("Cant update pokemon",{timeout:1000});
       });
     Loading.remove();
     props.close();
@@ -101,7 +103,7 @@ export default function UpdatePokemon(props) {
             id="gender"
             label="Gender"
             name="gender"
-            value=""
+            defaultValue={props.gender}
             onChange={handleChange}
           >
             <MenuItem value={"Female"}>Female</MenuItem>

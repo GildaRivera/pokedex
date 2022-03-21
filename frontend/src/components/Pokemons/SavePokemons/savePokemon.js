@@ -12,16 +12,18 @@ import {
   TextField,
 } from "@mui/material";
 import { Loading, Notify } from "notiflix";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../../App";
 
 export default function SavePokemon(props) {
+  const user = useContext(UserContext);
   const [form, setForm] = useState({
     name: props.pokemon.name,
     nickname: "",
     gender: "",
-    user_id:1,
-    url:props.pokemon.url,
-    pokemonId:props.pokemon.id
+    user_id: user.user.id,
+    url: props.pokemon.url,
+    pokemonId: props.pokemon.id,
   });
 
   //Adds new pokemon
@@ -37,13 +39,13 @@ export default function SavePokemon(props) {
     })
       .then((response) => {
         if (response.ok) {
-          Notify.success("Pokemon added");
+          Notify.success("Pokemon added",  {timeout:1000});
           return response.json();
         }
-        throw new Error("Somethi ng went wrong");
+        throw new Error("Something went wrong");
       })
       .catch((err) => {
-        Notify.failure("Error");
+        Notify.failure("Pokemon cant be added",{timeout:1000});
       });
     Loading.remove();
     props.close();
@@ -86,13 +88,13 @@ export default function SavePokemon(props) {
           />
         </FormControl>
 
-        <FormControl fullWidth>
+        <FormControl th>
           <InputLabel>Gender</InputLabel>
           <Select
             id="gender"
             label="Gender"
             name="gender"
-            value=""
+            defaultValue="-"
             onChange={handleChange}
           >
             <MenuItem value={"Female"}>Female</MenuItem>

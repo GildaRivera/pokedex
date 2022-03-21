@@ -55,7 +55,28 @@ exports.getUser = (req, res) => {
     } else return res.send(data);
   });
 };
-
+// Login user
+exports.loginUser = (req, res) => {
+  User.login(req.body.email, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        return res.status(404).send({
+          error: `Not found user with email${req.body.email}.`,
+        });
+      } else {
+        return res.status(500).send({
+          error: "Error retrieving user with email " + req.body.email,
+        });
+      }
+    } else if(data.length==0){
+      return res.status(404).send({
+        error: `Not found user with email${req.body.email}.`,
+      });
+    }
+    
+    return res.send(data);
+  });
+};
 // Update a user identified by the id in the request
 exports.updateUser = (req, res) => {
   // Validate Request

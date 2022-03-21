@@ -1,3 +1,5 @@
+import Login from '@mui/icons-material/Login';
+import LoginIcon from '@mui/icons-material/Login';
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -15,7 +17,10 @@ export default function Navbar(props) {
 
 
     const [value, setValue] = useState(0);
+const handleLogOut = ()=>{
+  props.handleLogin(false)
 
+}
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -49,6 +54,12 @@ export default function Navbar(props) {
             <Tab label="HOME"/>
             <Tab label="POKEMONS" />
             <Tab label="YOUR POKEMONS" />
+            <Login
+    
+          sx={{ color: "red"}}
+          onClick={handleLogOut}
+          /> 
+        
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
