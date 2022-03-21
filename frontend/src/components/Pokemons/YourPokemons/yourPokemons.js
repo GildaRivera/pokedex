@@ -47,12 +47,7 @@ export default function MyPokemons(props) {
       ))
     : <></>
     }
-      <Pagination
-        count={11}
-        page={page.pagination}
-        color="primary"
-        onChange={handleChange}
-      />
+     
     </div>
   );
 }

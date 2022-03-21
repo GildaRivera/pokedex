@@ -16,6 +16,8 @@ import { UserContext } from "../../App";
 
 export default function User(props) {
   const user = useContext(UserContext);
+  const [changed, setChanged] = useState(false);
+  const [update, setUpdate] = useState([]);
   const [form, setForm] = useState({
     name: user.user.name,
     nickname: user.user.nickname,
@@ -45,25 +47,37 @@ export default function User(props) {
     })
       .then((response) => {
         if (response.ok) {
-          Notify.success("User info updated", {timeout:1000});
+          Notify.success("User info updated", { timeout: 1000 });
           return response.json();
         }
       })
+      .then((actualData) => {
+        setChanged(true);
+        setUpdate(actualData);
+      })
       .catch((err) => {
-        Notify.failure("Error in updating",{timeout:1000});
+        Notify.failure("Error in updating", { timeout: 1000 });
       });
     Loading.remove();
   }
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (changed) {
+      user.handleLogin(true, update);
+    }
+    setChanged(false);
+  }, [update]);
+
   return (
     <div>
-      <Avatar
-        sx={{ bgcolor: "red" }}
-        alt="Remy Sharp"
-        src="/broken-image.jpg"
-      >
-        <CatchingPokemon />
-      </Avatar>
+      <div style={{ position: "relative", left: "10vw" , display:'block'}}>
+        <Avatar
+          sx={{ bgcolor: "red", width: "140px", height: "140px" }}
+          alt="Remy Sharp"
+          src="/broken-image.jpg"
+        >
+          <CatchingPokemon sx={{ width: "100%", height: "100%" }} />
+        </Avatar>
+      </div>
       <Container maxWidth="sm">
         <Box
           sx={{
@@ -73,7 +87,7 @@ export default function User(props) {
         >
           <FormControl>
             <TextField
-            id="name"
+              id="name"
               name="name"
               label="Name"
               defaultValue={user.user.name}
@@ -93,59 +107,60 @@ export default function User(props) {
               sx={{ margin: "2vh 0" }}
             />
           </FormControl>
-          <FormControl>
-            <TextField
-              id="region"
-              onChange={handleUpdate}
-              label="Region"
-              name="region"
-              defaultValue={user.user.region}
-              variant="outlined"
-              sx={{ margin: "2vh 0" }}
-            />
-          </FormControl>
+          <div style={{ display: "flex" }}>
+            <FormControl sx={{ marginRight: "1vw", width: "100%" }}>
+              <TextField
+                id="age"
+                label="age"
+                name="age"
+                onChange={handleUpdate}
+                type="number"
+                defaultValue={user.user.age}
+                variant="outlined"
+                sx={{ margin: "2vh 0" }}
+              />
+            </FormControl>
+            <FormControl sx={{ marginLeft: "1vw", width: "100%" }}>
+              <TextField
+                id="region"
+                onChange={handleUpdate}
+                label="Region"
+                name="region"
+                defaultValue={user.user.region}
+                variant="outlined"
+                sx={{ margin: "2vh 0" }}
+              />
+            </FormControl>
+          </div>
+          <div style={{ display: "flex" }}>
+            <FormControl fullWidth sx={{ marginRight: "1vw" }}>
+              <InputLabel>Gender</InputLabel>
+              <Select
+                id="gender"
+                label="Gender"
+                name="gender"
+                defaultValue={user.user.gender}
+                onChange={handleUpdate}
+              >
+                <MenuItem value="Female">Female</MenuItem>
+                <MenuItem value="Male">Male</MenuItem>
+              </Select>
+            </FormControl>
 
-          <FormControl fullWidth>
-            <InputLabel>Gender</InputLabel>
-            <Select
-              id="gender"
-              label="Gender"
-              name="gender"
-              defaultValue={user.user.gender}
-              onChange={handleUpdate}
-            >
-              <MenuItem value="Female">Female</MenuItem>
-              <MenuItem value="Male">Male</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl>
-            <TextField
-              id="age"
-              label="age"
-              name="age"
-              onChange={handleUpdate}
-              type="number"
-              defaultValue={user.user.age}
-              variant="outlined"
-              sx={{ margin: "2vh 0" }}
-            />
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel>Trainer class</InputLabel>
-            <Select
-              label="Trainer class"
-              id="trainerclass"
-              defaultValue={user.user.trainerclass}
-              name="trainerclass"
-              onChange={handleUpdate}
-       
-            >
-              <MenuItem value="Battle">Battle</MenuItem>
-              <MenuItem value="Show">Show</MenuItem>
-            </Select>
-          </FormControl>
+            <FormControl fullWidth sx={{ marginLeft: "1vw" }}>
+              <InputLabel>Trainer class</InputLabel>
+              <Select
+                label="Trainer class"
+                id="trainerclass"
+                defaultValue={user.user.trainerclass}
+                name="trainerclass"
+                onChange={handleUpdate}
+              >
+                <MenuItem value="Battle">Battle</MenuItem>
+                <MenuItem value="Show">Show</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
           <FormControl>
             <TextField
               id="email"

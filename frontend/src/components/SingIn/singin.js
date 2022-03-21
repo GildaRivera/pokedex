@@ -11,7 +11,8 @@ import {
 import { Box } from "@mui/system";
 import { Loading, Notify } from "notiflix";
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import './sigin.css'
 export default function SignIn(props) {
   const [form, setForm] = useState({
     name: "",
@@ -31,9 +32,11 @@ export default function SignIn(props) {
       return prev;
     });
   };
+  const navigate = useNavigate();
   useEffect(() => {
     if (logged) {
       props.handleLogin(true, user);
+      navigate("/");
     }
   }, [logged]);
   async function handleCreate() {
@@ -63,15 +66,15 @@ export default function SignIn(props) {
       });
     Loading.remove();
   }
-  return (
-    <Container maxWidth="sm">
+  return (<div className="signin__container">
+    <Container maxWidth="sm"  sx={{position:'relative', top:'10vh'}}>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <Typography variant="h1" component="div" gutterBottom>
+        <Typography variant="h3" component="div" gutterBottom sx={{textAlign:"center", color:'#E64545'}}>
           Create account
         </Typography>
         <FormControl>
@@ -96,7 +99,8 @@ export default function SignIn(props) {
             required
           />
         </FormControl>
-        <FormControl>
+        <div className="signin__element" >
+        <FormControl sx={{marginRight:'1vw', width:'100%'}}>
           <TextField
             id="region"
             onChange={handleUpdate}
@@ -107,8 +111,31 @@ export default function SignIn(props) {
             required
           />
         </FormControl>
-
-        <FormControl fullWidth>
+        <FormControl sx={{marginLeft:'1vw', width:'100%'}}>
+          <TextField
+            id="age"
+            label="age"
+            name="age"
+            onChange={handleUpdate}
+            type="number"
+            variant="outlined"
+            sx={{ margin: "2vh 0" }}
+            required
+          />
+        </FormControl></div>
+        <FormControl>
+          <TextField
+            id="email"
+            label="Email"
+            name="email"
+            onChange={handleUpdate}
+            variant="outlined"
+            sx={{ margin: "2vh 0" }}
+            required
+          /> 
+        </FormControl>
+        <div className="signin__element">
+        <FormControl fullWidth sx={{marginRight:'1vw'}}>
           <InputLabel>Gender</InputLabel>
           <Select
             id="gender"
@@ -123,20 +150,8 @@ export default function SignIn(props) {
           </Select>
         </FormControl>
 
-        <FormControl>
-          <TextField
-            id="age"
-            label="age"
-            name="age"
-            onChange={handleUpdate}
-            type="number"
-            variant="outlined"
-            sx={{ margin: "2vh 0" }}
-            required
-          />
-        </FormControl>
-
-        <FormControl fullWidth>
+      
+        <FormControl fullWidth sx={{marginLeft:'1vw'}}>
           <InputLabel>Trainer class</InputLabel>
           <Select
             label="Trainer class"
@@ -148,23 +163,13 @@ export default function SignIn(props) {
             <MenuItem value="Battle">Battle</MenuItem>
             <MenuItem value="Show">Show</MenuItem>
           </Select>
-        </FormControl>
-        <FormControl>
-          <TextField
-            id="email"
-            label="Email"
-            name="email"
-            onChange={handleUpdate}
-            variant="outlined"
-            sx={{ margin: "2vh 0" }}
-            required
-          />
-        </FormControl>
+        </FormControl></div>
 
-        <Button onClick={handleCreate} variant="outlined">
+
+        <Button onClick={handleCreate} variant="contained"  sx={{margin:'2vh 0'}}>
           Create
         </Button>
       </Box>
-    </Container>
+    </Container></div>
   );
 }

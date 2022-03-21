@@ -12,9 +12,13 @@ export const UserContext = createContext();
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
+
+  //Logs in and stores sesion
   const handleLogin = (e, u) => {
     if (e === true) {
+      console.log(u)
       setLoggedIn(true);
+      window.localStorage.clear()
       window.localStorage.setItem("user", JSON.stringify(u));
       setUser(u);
       return null;
@@ -22,7 +26,7 @@ function App() {
     setLoggedIn(false);
     window.localStorage.clear();
   };
-
+//Checks if sesion exists
   useEffect(() => {
     let sesion = JSON.parse(window.localStorage.getItem("user"));
     if (sesion) {
@@ -40,7 +44,7 @@ function App() {
       <Routes>
         <Route path="/"
         element={loggedIn ? (
-              <UserContext.Provider value={{ logged: loggedIn, user: user }}>
+              <UserContext.Provider value={{ logged: loggedIn, user: user, handleLogin:handleLogin }}>
              
                 <Navbar handleLogin={handleLogin} />
               </UserContext.Provider>

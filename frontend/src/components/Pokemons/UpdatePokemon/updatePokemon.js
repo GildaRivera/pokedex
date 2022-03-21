@@ -30,7 +30,7 @@ export default function UpdatePokemon(props) {
   async function handleUpdate() {
     setForm((prev) => {
       prev["name"] = props.pokemon.name;
-      prev["user_id"] = 1;
+      prev["user_id"] = user.user.id;
       prev["url"] = props.pokemon.url;
       prev["pokemonId"] = props.pokemon.id;
       return prev;

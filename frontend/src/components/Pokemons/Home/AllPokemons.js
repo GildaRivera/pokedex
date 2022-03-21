@@ -24,10 +24,18 @@ export default function AllPokemons(props) {
   }, [page.pagination]);
   //Changes state for the pagination
   const handleChange = (e, next) => {
-    setPage((prev) => ({
+    setPage((prev) =>{
+     let diff= next-prev.pagination
+      console.log(diff)
+      return{
       pagination: next,
       queryPagination: prev.queryPagination + 100,
-    }));
+    }
+  
+  
+  
+  
+  });
   };
 
   return (

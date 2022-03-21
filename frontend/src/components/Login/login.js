@@ -9,7 +9,7 @@ import { Box } from "@mui/system";
 import { Loading, Notify } from "notiflix";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-
+import './login.css'
 
 export default function Login(props) {
   const [form, setForm] = useState({
@@ -57,17 +57,17 @@ export default function Login(props) {
       });
     Loading.remove();
   }
-  return (
-    <Container maxWidth="sm">
+  return (<div className="login__container">
+    <Container maxWidth="sm" sx={{position:'relative', top:'20vh'}} >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <Typography variant="h1" component="div" gutterBottom>
-          Login
-        </Typography>
+    <Typography variant="h3" gutterBottom component="div" sx={{textAlign:"center", color:'#E64545'}}>
+  Welcome back
+      </Typography>
         <FormControl>
           <TextField
             name="email"
@@ -88,13 +88,13 @@ export default function Login(props) {
           />
         </FormControl>
 
-        <Button onClick={handleLog} variant="outlined">
-          Save
+        <Button onClick={handleLog} variant="contained" sx={{marginBottom:'2vh'}}>
+         Login
         </Button>
         <Button variant="outlined" onClick={() => navigate('/create')} > 
           Create account
         </Button>
       </Box>
-    </Container>
+    </Container></div>
   );
 }
