@@ -22,6 +22,7 @@ export default function SignIn(props) {
     region: "",
     age: "",
     trainerclass: "",
+    password:""
   });
   const [logged, setlogged] = useState(false);
   const [user, setUser] = useState({});
@@ -133,6 +134,18 @@ export default function SignIn(props) {
             sx={{ margin: "2vh 0" }}
             required
           /> 
+        </FormControl>
+        <FormControl>
+          <TextField
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            variant="outlined"
+            sx={{ margin: "2vh 0" }}
+            onChange={handleUpdate}
+            required
+          />
         </FormControl>
         <div className="signin__element">
         <FormControl fullWidth sx={{marginRight:'1vw'}}>

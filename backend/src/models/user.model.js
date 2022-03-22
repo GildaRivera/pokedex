@@ -9,12 +9,13 @@ const User = function(user) {
     this.age=user.age
     this.trainerclass=user.trainerclass
     this.email=user.email
+    this.password = user.password
 
 };
 User.create = (newUser, result) => {
+  
   sql.query("INSERT INTO user SET ?", newUser, (err, res) => {
     if (err) {
-      console.log(err,"......")
       return result(err, null);
     }
     return result(null, { id: res.insertId, ...newUser});
@@ -54,8 +55,8 @@ User.login = (email, result) => {
 };
 User.updateById = (id, user, result) => {
   sql.query(
-    "UPDATE user SET name = ?, nickname = ?, region = ?, gender = ?, age = ?, trainerclass = ?, email = ? WHERE id = ?",
-    [user.name, user.nickname, user.region, user.gender, user.age, user.trainerclass, user.email, id],
+    "UPDATE user SET name = ?, nickname = ?, region = ?, gender = ?, age = ?, trainerclass = ?, email = ?, password=? WHERE id = ?",
+    [user.name, user.nickname, user.region, user.gender, user.age, user.trainerclass, user.email, user.password, id],
     (err, res) => {
       if (err) {
         return result(null, err);

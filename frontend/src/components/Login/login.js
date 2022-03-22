@@ -32,6 +32,7 @@ export default function Login(props) {
     }
   }, [logged]);
   async function handleLog() {
+    console.log(form)
     Loading.circle();
     await fetch(`http://localhost:8082/api/login`, {
       method: "POST",
@@ -81,6 +82,7 @@ export default function Login(props) {
           <TextField
             id="password"
             name="password"
+            type="password"
             onChange={handleUpdate}
             label="Password"
             variant="outlined"

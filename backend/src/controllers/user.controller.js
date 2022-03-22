@@ -16,6 +16,7 @@ exports.createUser = (req, res) => {
     age: req.body.age,
     trainerclass: req.body.trainerclass,
     email: req.body.email,
+    password : req.body.password
   });
   // Save user in the database
   User.create(user, (err, data) => {
@@ -73,8 +74,12 @@ exports.loginUser = (req, res) => {
         error: `Not found user with email${req.body.email}.`,
       });
     }
-    
-    return res.send(data);
+    if(data[0].password==req.body.password){
+      return res.send(data);
+    }
+    return res.status(404).send({
+      error: `Not found user with email${req.body.email}.`,
+    });
   });
 };
 // Update a user identified by the id in the request

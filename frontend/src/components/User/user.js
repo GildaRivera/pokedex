@@ -172,6 +172,19 @@ export default function User(props) {
               sx={{ margin: "2vh 0" }}
             />
           </FormControl>
+          <FormControl>
+          <TextField
+            id="password"
+            name="password"
+            label="Password"
+            variant="outlined"
+            type="password"
+            defaultValue={user.user.password}
+            sx={{ margin: "2vh 0" }}
+            onChange={handleUpdate}
+            required
+          />
+        </FormControl>
           <Button onClick={handleSave} variant="contained">
             Save
           </Button>
