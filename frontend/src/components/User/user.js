@@ -13,7 +13,8 @@ import { Box } from "@mui/system";
 import { Loading, Notify } from "notiflix";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-
+import girl from '../../../src/components/utils/girl.png'
+import boy from '../../../src/components/utils/boy.png'
 export default function User(props) {
   const user = useContext(UserContext);
   const [changed, setChanged] = useState(false);
@@ -34,6 +35,12 @@ export default function User(props) {
       prev[e.target.name] = newValue;
       return prev;
     });
+  };
+  const style = {
+   // backgroundImage: `url(${image})`,
+    height: "20vh",
+    backgroundSize: "100%",
+    backgroundRepeat: "no-repeat",
   };
   async function handleSave() {
     Loading.circle();
@@ -67,15 +74,18 @@ export default function User(props) {
     setChanged(false);
   }, [update]);
 
+
+
   return (
-    <div>
-      <div style={{ position: "relative", left: "10vw" , display:'block', top:'6vh'}}>
+    <div >
+      <div style={{ position: "relative", left: "14vw" , display:'block', top:'8vh'}}>
         <Avatar
-          sx={{ bgcolor: "red", width: "140px", height: "140px" }}
+          sx={{ bgcolor: "#1976d2", width: "140px", height: "140px" }}
           alt="Remy Sharp"
-          src="/broken-image.jpg"
+          src={user.user.gender=='Female'? girl : boy}
+          style={style}
         >
-          <CatchingPokemon sx={{ width: "100%", height: "100%" }} />
+        
         </Avatar>
       </div>
       <Container maxWidth="sm">
@@ -179,7 +189,7 @@ export default function User(props) {
             label="Password"
             variant="outlined"
             type="password"
-            defaultValue={user.user.password}
+            value={user.user.password}
             sx={{ margin: "2vh 0" }}
             onChange={handleUpdate}
             required

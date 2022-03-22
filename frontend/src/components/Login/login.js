@@ -32,8 +32,12 @@ export default function Login(props) {
     }
   }, [logged]);
   async function handleLog() {
-    console.log(form)
     Loading.circle();
+    if(form.password=='' || form.email==''){ 
+      Loading.remove();
+      Notify.failure("Please enter the rigth email and password")
+      return null
+      }
     await fetch(`http://localhost:8082/api/login`, {
       method: "POST",
       headers: {
@@ -54,8 +58,10 @@ export default function Login(props) {
         setlogged(true);
       })
       .catch((err) => {
-        Notify.failure("Error in login", { timeout: 1000 });
+        Notify.failure("User does not exists", { timeout: 1000 });
       });
+    
+    
     Loading.remove();
   }
   return (<div className="login__container">

@@ -63,7 +63,7 @@ export default function SignIn(props) {
         setlogged(true);
       })
       .catch((err) => {
-        Notify.failure("Error", { timeout: 1000 });
+        Notify.failure("Could not create account", { timeout: 1000 });
       });
     Loading.remove();
   }
